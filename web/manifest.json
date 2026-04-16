@@ -1,0 +1,39 @@
+{
+    "name": "Chess Quest",
+    "short_name": "Chess Quest",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#F8F6FF",
+    "theme_color": "#6C63FF",
+    "description": "An interactive chess learning app for kids. Learn chess from beginner to master level!",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "categories": [
+        "games",
+        "education"
+    ],
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/Icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}
