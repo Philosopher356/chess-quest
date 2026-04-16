@@ -52,11 +52,11 @@ class ProfileSelectionScreen extends ConsumerWidget {
                         name: profile.name,
                         avatar: _avatars[profile.avatarId % _avatars.length],
                         xp: profile.totalXp,
-                        onTap: () {
-                          ref
+                        onTap: () async {
+                          await ref
                               .read(profileNotifierProvider.notifier)
                               .setActiveProfile(profile.id);
-                          context.go('/learn');
+                          if (context.mounted) context.go('/learn');
                         },
                       );
                     },

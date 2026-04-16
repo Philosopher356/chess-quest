@@ -31,6 +31,21 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
   late Chapter _chapter;
   bool _initialized = false;
 
+  @override
+  void initState() {
+    super.initState();
+    final chapter = _findChapter();
+    if (chapter != null) {
+      _chapter = chapter;
+      _lessons = ContentRegistry.getLessons(widget.chapterId);
+      _initialized = true;
+      // Defer provider modification to after the build phase
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ref.read(activeLessonProvider.notifier).setLesson(_lessons[0]);
+      });
+    }
+  }
+
   Chapter? _findChapter() {
     for (final world in World.all) {
       for (final chapter in world.chapters) {
@@ -40,14 +55,6 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
     return null;
   }
 
-  void _initLessons() {
-    if (_initialized) return;
-    _chapter = _findChapter()!;
-    _lessons = ContentRegistry.getLessons(widget.chapterId);
-    _startLesson(0);
-    _initialized = true;
-  }
-
   void _startLesson(int index) {
     _currentLessonIndex = index;
     ref.read(activeLessonProvider.notifier).setLesson(_lessons[index]);
@@ -55,13 +62,9 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final chapter = _findChapter();
-    if (chapter == null) {
+    if (!_initialized) {
       return const Scaffold(body: Center(child: Text('Chapter not found')));
     }
-
-    // Initialize on first build
-    _initLessons();
 
     final lessonState = ref.watch(lessonControllerProvider);
     final controller = ref.read(lessonControllerProvider.notifier);
@@ -162,6 +165,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
     List<(String, String)> arrows = [];
     bool interactable = false;
     void Function(String, String)? onMove;
+    void Function(String)? onSquareTap;
 
     switch (step) {
       case ShowPositionStep s:
@@ -178,6 +182,8 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
         onMove = controller.handleMove;
       case WaitForTapStep s:
         fen = s.fen;
+        objectives = [s.targetSquare];
+        onSquareTap = controller.handleTap;
       case MascotSpeechStep s:
         fen = s.fen ??
             'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
@@ -208,6 +214,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
         hintSquares: hints,
         arrows: arrows,
         onMove: onMove,
+        onSquareTap: onSquareTap,
       ),
     );
   }

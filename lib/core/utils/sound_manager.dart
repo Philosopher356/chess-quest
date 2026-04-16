@@ -56,8 +56,8 @@ class SoundManager {
       await player.setAsset(effect.assetPath);
       await player.seek(Duration.zero);
       await player.play();
-    } catch (e) {
-      debugPrint('Sound play error: $e');
+    } catch (_) {
+      // Silently ignore - plugin may not be available on this platform (e.g. Windows desktop)
     }
   }
 

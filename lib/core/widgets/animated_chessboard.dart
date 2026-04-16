@@ -18,6 +18,7 @@ class AnimatedChessboard extends StatefulWidget {
   final List<String> hintSquares;
   final List<(String from, String to)> arrows;
   final void Function(String from, String to)? onMove;
+  final void Function(String square)? onSquareTap;
   final Set<String>? allowedMoves;
 
   const AnimatedChessboard({
@@ -31,6 +32,7 @@ class AnimatedChessboard extends StatefulWidget {
     this.hintSquares = const [],
     this.arrows = const [],
     this.onMove,
+    this.onSquareTap,
     this.allowedMoves,
   });
 
@@ -137,6 +139,25 @@ class _AnimatedChessboardState extends State<AnimatedChessboard> {
                   child: CustomPaint(
                     size: Size(boardSize, boardSize),
                     painter: _CoordinatePainter(boardSize: boardSize),
+                  ),
+                ),
+
+              // Square tap detection overlay
+              if (widget.onSquareTap != null)
+                GestureDetector(
+                  onTapUp: (details) {
+                    final squareSize = boardSize / 8;
+                    final file = (details.localPosition.dx / squareSize).floor();
+                    final rank = 7 - (details.localPosition.dy / squareSize).floor();
+                    if (file >= 0 && file < 8 && rank >= 0 && rank < 8) {
+                      final square = '${String.fromCharCode('a'.codeUnitAt(0) + file)}${rank + 1}';
+                      widget.onSquareTap!(square);
+                    }
+                  },
+                  child: Container(
+                    width: boardSize,
+                    height: boardSize,
+                    color: const Color(0x00000000), // Transparent but tappable
                   ),
                 ),
             ],

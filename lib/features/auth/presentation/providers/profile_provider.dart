@@ -32,18 +32,18 @@ class ProfileNotifier extends AsyncNotifier<Profile?> {
       ),
     );
     await dao.setActiveProfile(id);
-    ref.invalidateSelf();
+    await Future.microtask(() => ref.invalidateSelf());
     return id;
   }
 
   Future<void> setActiveProfile(int profileId) async {
     await ref.read(profileDaoProvider).setActiveProfile(profileId);
-    ref.invalidateSelf();
+    await Future.microtask(() => ref.invalidateSelf());
   }
 
   Future<void> deleteProfile(int profileId) async {
     await ref.read(profileDaoProvider).deleteProfile(profileId);
-    ref.invalidateSelf();
+    await Future.microtask(() => ref.invalidateSelf());
   }
 }
 
