@@ -1,155 +1,123 @@
 import '../../domain/entities/lesson.dart';
 
-/// Chapter 6: The Knight - L-shape movement, jumping.
+/// Chapter 6: "Protecting the King" — King movement, check, and checkmate combined.
 class Chapter6Content {
   static List<Lesson> get lessons => [
-        _sirHopsSecret,
-        _jumpingOverWalls,
-        _knightsTour,
-        _knightForkPreview,
+        _carefulKing,
+        _dangerCheck,
+        _noEscapeCheckmate,
       ];
 
-  static Lesson get _sirHopsSecret => const Lesson(
+  static Lesson get _carefulKing => const Lesson(
         id: 'ch6_l1',
-        title: "Sir Hops' Secret",
-        description: 'The mysterious L-shape move!',
+        title: 'The Careful King',
+        description: 'One step at a time!',
         xpReward: 25,
         steps: [
           MascotSpeechStep(
             message:
-                "Now it's time to reveal MY secret! I'm a knight, and I move in a special L-shape!",
-            emotion: 'excited',
-          ),
-          ShowPositionStep(
-            fen: '8/8/8/8/4N3/8/8/8 w - - 0 1',
-            message:
-                "The knight moves in an L-shape: two squares in one direction, then one square to the side!",
-            highlightSquares: ['d6', 'f6', 'c5', 'g5', 'c3', 'g3', 'd2', 'f2'],
-            arrows: [('e4', 'd6'), ('e4', 'f6'), ('e4', 'g5'), ('e4', 'g3')],
+                "Here he is — the KING! He's the most important piece in the entire game. If you lose him... it's GAME OVER!",
+            emotion: 'storytelling',
+            fen: '8/8/8/8/4K3/8/8/8 w - - 0 1',
           ),
           MascotSpeechStep(
             message:
-                "Think of it as: 2 squares straight + 1 square sideways, or 1 square straight + 2 squares sideways. Always makes an L!",
+                "But he's slow — just one step at a time, in any direction. He's important, not fast!",
             emotion: 'explaining',
           ),
+          ShowPositionStep(
+            fen: '8/8/8/8/4K3/8/8/8 w - - 0 1',
+            message: "Move the King! Any direction, but only one square at a time!",
+            highlightSquares: ['d5', 'e5', 'f5', 'd4', 'f4', 'd3', 'e3', 'f3'],
+          ),
           WaitForMoveStep(
-            fen: '8/8/8/8/4N3/8/8/8 w - - 0 1',
+            fen: '8/8/8/8/4K3/8/8/8 w - - 0 1',
             acceptedMoves: [
-              ('e4', 'd6'), ('e4', 'f6'),
-              ('e4', 'c5'), ('e4', 'g5'),
-              ('e4', 'c3'), ('e4', 'g3'),
-              ('e4', 'd2'), ('e4', 'f2'),
+              ('e4', 'd5'), ('e4', 'e5'), ('e4', 'f5'),
+              ('e4', 'd4'), ('e4', 'f4'),
+              ('e4', 'd3'), ('e4', 'e3'), ('e4', 'f3'),
             ],
-            hintMessage: 'Move the knight in an L-shape to any highlighted square!',
-            successMessage: "That's the L-shape! You did it!",
+            hintMessage: "One step, any direction! He's careful but steady!",
+            successMessage: "One careful step. That's the King — slow but mighty!",
             showValidMoves: true,
           ),
-          QuizStep(
-            question: 'How many squares can a knight in the center reach?',
-            options: ['4', '6', '8', '12'],
-            correctIndex: 2,
-            explanation:
-                'A knight in the center can reach 8 squares! On the edge it reaches fewer.',
+          MascotSpeechStep(
+            message:
+                "The whole game revolves around the King. Protect YOURS, trap THEIRS. Simple idea, complex game!",
+            emotion: 'explaining',
           ),
         ],
       );
 
-  static Lesson get _jumpingOverWalls => const Lesson(
+  static Lesson get _dangerCheck => const Lesson(
         id: 'ch6_l2',
-        title: 'Jumping Over Walls',
-        description: 'Knights can jump!',
-        xpReward: 20,
-        steps: [
-          MascotSpeechStep(
-            message:
-                "Here's what makes the knight REALLY special: it's the only piece that can JUMP over other pieces!",
-            emotion: 'excited',
-          ),
-          ShowPositionStep(
-            fen: '8/8/8/3PPP2/3PNP2/3PPP2/8/8 w - - 0 1',
-            message:
-                "See? The knight is completely surrounded by pawns, but it can still move! It jumps right over them!",
-            highlightSquares: ['d6', 'f6', 'c5', 'g5', 'c3', 'g3', 'd2', 'f2'],
-          ),
-          WaitForMoveStep(
-            fen: '8/8/8/3PPP2/3PNP2/3PPP2/8/8 w - - 0 1',
-            acceptedMoves: [
-              ('e4', 'd6'), ('e4', 'f6'),
-              ('e4', 'c5'), ('e4', 'g5'),
-              ('e4', 'c3'), ('e4', 'g3'),
-              ('e4', 'd2'), ('e4', 'f2'),
-            ],
-            hintMessage: 'Jump the knight over the pawns!',
-            successMessage: "The knight leaps over everything!",
-          ),
-          MascotSpeechStep(
-            message:
-                "No other piece can jump! Rooks, bishops, and queens are all blocked by pieces in their way. But not the knight!",
-            emotion: 'happy',
-          ),
-        ],
-      );
-
-  static Lesson get _knightsTour => const Lesson(
-        id: 'ch6_l3',
-        title: "Knight's Tour",
-        description: 'Visit all the target squares!',
+        title: 'Danger! Check!',
+        description: 'The king is under attack!',
         xpReward: 30,
-        isMiniGame: true,
         steps: [
           MascotSpeechStep(
             message:
-                "Challenge time! Can you move the knight to visit all the starred squares?",
-            emotion: 'excited',
+                "UH OH! When an enemy piece directly attacks the King, that's called CHECK! The King MUST escape — no excuses!",
+            emotion: 'worried',
+          ),
+          ShowPositionStep(
+            fen: '4k3/8/8/8/4R3/8/8/4K3 w - - 0 1',
+            message: "The white Rook is attacking the black King! That's CHECK!",
+            arrows: [('e4', 'e8')],
+            dangerSquares: ['e8'],
           ),
           MascotSpeechStep(
             message:
-                "Remember the L-shape! Plan your path carefully!",
-            emotion: 'thinking',
+                "Three ways to escape check:\n1. MOVE the king away\n2. BLOCK the attack\n3. CAPTURE the attacker!",
+            emotion: 'explaining',
           ),
-          // Simplified knight tour: visit 4 target squares
-          CaptureChallenge(
-            fen: '8/2p5/8/5p2/8/2N5/8/6p1 w - - 0 1',
-            targetMoves: 4,
-            piece: 'N',
-            message: 'Visit all marked squares with the knight!',
+          // Player must escape check
+          WaitForMoveStep(
+            fen: '8/8/8/8/4r3/8/8/4K3 w - - 0 1',
+            acceptedMoves: [('e1', 'd1'), ('e1', 'f1'), ('e1', 'd2'), ('e1', 'f2')],
+            hintMessage: "Your King is in check! Move him to a safe square!",
+            successMessage: "Phew! The King escaped! That was close!",
+            failMessage: "That square is still dangerous! Try a different direction!",
+          ),
+          MascotSpeechStep(
+            message:
+                "Nice escape! But what if there's NO escape? That's the scariest word in chess...",
+            emotion: 'worried',
           ),
         ],
       );
 
-  static Lesson get _knightForkPreview => const Lesson(
-        id: 'ch6_l4',
-        title: 'Knight Fork Preview',
-        description: 'Attack two at once!',
-        xpReward: 25,
+  static Lesson get _noEscapeCheckmate => const Lesson(
+        id: 'ch6_l3',
+        title: 'No Escape: Checkmate',
+        description: 'Game over for the enemy!',
+        xpReward: 35,
         steps: [
           MascotSpeechStep(
             message:
-                "Here's a sneak peek at one of the knight's most powerful tricks: the FORK!",
+                "CHECKMATE! That's when the King is in check AND there's absolutely NO way to escape! The game is OVER!",
             emotion: 'excited',
           ),
           ShowPositionStep(
-            fen: '4k3/8/8/8/8/5N2/8/4K3 w - - 0 1',
-            message:
-                "What if the knight could attack the enemy king AND another piece at the same time?",
-            arrows: [('f3', 'e5')],
-            objectiveSquares: ['e5'],
+            fen: '6k1/5ppp/8/8/8/8/8/R3K3 w - - 0 1',
+            message: "Look — the black King is trapped behind his own pawns. If the Rook attacks the back row...",
+            arrows: [('a1', 'a8')],
           ),
           WaitForMoveStep(
-            fen: '3qk3/8/8/8/8/5N2/8/4K3 w - - 0 1',
-            acceptedMoves: [('f3', 'e5')],
-            hintMessage: 'Move the knight to e5 to fork the king and queen!',
-            successMessage: "FORK! The knight attacks the king AND the queen!",
+            fen: '6k1/5ppp/8/8/8/8/8/R3K3 w - - 0 1',
+            acceptedMoves: [('a1', 'a8')],
+            hintMessage: "Move the rook to the 8th row! The king is trapped!",
+            successMessage: "CHECKMATE! The King can't escape — his own pawns block him! GAME OVER!",
           ),
           MascotSpeechStep(
             message:
-                "The enemy must save the king, so you capture the queen for free! We'll practice forks more later!",
-            emotion: 'happy',
+                "That's the whole goal of chess: CHECKMATE the enemy King! Not capture him — trap him so he CAN'T escape!",
+            emotion: 'explaining',
           ),
           MascotSpeechStep(
             message:
-                "The knight is worth 3 points and is full of tricks! It's my favorite piece... for obvious reasons!",
-            emotion: 'excited',
+                "We've found ALL the pieces! Now it's time for our FIRST REAL BATTLE! Let's set up the army!",
+            emotion: 'determined',
           ),
         ],
       );

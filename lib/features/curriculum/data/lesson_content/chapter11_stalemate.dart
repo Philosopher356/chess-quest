@@ -1,92 +1,120 @@
 import '../../domain/entities/lesson.dart';
 
-/// Chapter 11: Stalemate and Draws.
+/// Chapter 11: "Battle Formations" — Opening principles as battle strategy.
 class Chapter11Content {
   static List<Lesson> get lessons => [
-        _nobodyWins,
-        _avoidStalemate,
+        _seizeTheCenter,
+        _deployForces,
+        _shieldTheKing,
+        _famousFormations,
       ];
 
-  static Lesson get _nobodyWins => const Lesson(
+  static Lesson get _seizeTheCenter => const Lesson(
         id: 'ch11_l1',
-        title: 'Nobody Wins',
-        description: 'When no moves are legal',
-        xpReward: 25,
+        title: 'Seize the Center',
+        description: 'Control the heart of the board!',
+        xpReward: 30,
         steps: [
           MascotSpeechStep(
-            message:
-                "Sometimes chess ends in a DRAW - nobody wins! The most common way is called STALEMATE.",
-            emotion: 'explaining',
+            message: "Every great battle starts with the CENTER! The four center squares are the most powerful positions on the board!",
+            emotion: 'storytelling',
+            fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
           ),
           ShowPositionStep(
-            fen: 'k7/8/1K6/8/8/8/8/7Q w - - 0 1',
-            message:
-                "Watch what happens if white plays Qh7 here... oops!",
+            fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+            message: "These four squares are the HIGH GROUND! Whoever controls them controls the battle!",
+            objectiveSquares: ['d4', 'd5', 'e4', 'e5'],
           ),
-          ShowPositionStep(
-            fen: 'k7/7Q/1K6/8/8/8/8/8 b - - 0 1',
-            message:
-                "STALEMATE! The black king is NOT in check, but has NO legal moves! Every square around it is attacked.",
-            dangerSquares: ['a7', 'b7', 'b8'],
-          ),
-          MascotSpeechStep(
-            message:
-                "Stalemate = NOT in check + NO legal moves = DRAW! It's not checkmate because the king isn't attacked.",
-            emotion: 'explaining',
+          WaitForMoveStep(
+            fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+            acceptedMoves: [('e2', 'e4'), ('d2', 'd4')],
+            hintMessage: "Claim the center! Move a pawn to e4 or d4!",
+            successMessage: "You seized the center! That's how battles begin!",
+            failMessage: "Start with e4 or d4 — claim the high ground!",
           ),
           MascotSpeechStep(
-            message:
-                "Other draws: if both sides have only a king (no pieces left to checkmate), the same position repeats 3 times, or 50 moves pass with no captures or pawn moves.",
+            message: "Pieces in the center control MORE squares. A knight in the center reaches 8 squares. On the edge? Only 2-4!",
             emotion: 'explaining',
-          ),
-          QuizStep(
-            question: 'Stalemate happens when...',
-            options: [
-              'The king is in check with no escape',
-              'The king is NOT in check but has no legal moves',
-              'Both players agree to stop',
-              'A player runs out of time',
-            ],
-            correctIndex: 1,
-            explanation:
-                "Stalemate = NOT in check + no legal moves. If it WERE in check with no escape, that would be checkmate!",
           ),
         ],
       );
 
-  static Lesson get _avoidStalemate => const Lesson(
+  static Lesson get _deployForces => const Lesson(
         id: 'ch11_l2',
-        title: 'Avoid the Stalemate',
-        description: "Don't let them escape!",
-        xpReward: 30,
+        title: 'Deploy Your Forces',
+        description: 'Get everyone fighting!',
+        xpReward: 25,
         steps: [
           MascotSpeechStep(
-            message:
-                "When you're winning, be careful NOT to stalemate your opponent! You want checkmate, not a draw!",
+            message: "Rule two of battle: get ALL your pieces into the fight FAST! An army sitting on the back row is useless!",
+            emotion: 'determined',
+          ),
+          MascotSpeechStep(
+            message: "Development order:\n1. Center pawns first\n2. Knights before bishops\n3. DON'T move the Queen early (she gets chased!)\n4. Connect your Rooks!",
             emotion: 'explaining',
           ),
           QuizStep(
-            question: 'White has queen on h6, king on f6. Black king on h8. Should white play Qg7?',
-            options: ['Yes, it gives checkmate!', 'No, it causes stalemate!'],
-            correctIndex: 0,
-            explanation: "Yes! Qg7 is checkmate because the queen attacks h8 and the king has no escape. This one IS checkmate!",
-            fen: '7k/8/5K1Q/8/8/8/8/8 w - - 0 1',
-          ),
-          QuizStep(
-            question: 'White queen on f7, white king on f5, black king on h8. Should white play Qg7?',
-            options: ['Yes, it gives checkmate!', 'No, it causes stalemate!'],
+            question: "Why is bringing the Queen out early usually bad?",
+            options: [
+              "The Queen is too strong",
+              "Enemies chase her with weaker pieces, gaining time",
+              "There's no room for her",
+            ],
             correctIndex: 1,
-            explanation: "Stalemate! After Qg7, the black king on h8 is NOT in check but has no legal moves. Give check instead!",
-            fen: '7k/5Q2/8/5K2/8/8/8/8 w - - 0 1',
+            explanation: "The enemy develops while attacking your Queen! They gain speed while you waste moves retreating!",
           ),
           MascotSpeechStep(
-            message:
-                "Always ask yourself: after my move, does the opponent have ANY legal move? If not, and they're not in check, it's stalemate!",
-            emotion: 'thinking',
+            message: "Get knights and bishops out first. Save the Queen for later. Fast development wins games!",
+            emotion: 'proud',
+          ),
+        ],
+      );
+
+  static Lesson get _shieldTheKing => const Lesson(
+        id: 'ch11_l3',
+        title: 'Shield the King',
+        description: 'Castle early!',
+        xpReward: 25,
+        steps: [
+          MascotSpeechStep(
+            message: "Rule three: CASTLE EARLY! Tuck the King behind pawns before launching your attack!",
+            emotion: 'worried',
+          ),
+          ShowPositionStep(
+            fen: 'r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 0 1',
+            message: "White is ready to castle! The knight and bishop cleared the path. Castle and the King is safe!",
+            arrows: [('e1', 'g1')],
           ),
           MascotSpeechStep(
-            message: "Great awareness! Avoiding stalemate is a key skill!",
+            message: "Three rules of battle:\n1. Seize the center\n2. Deploy your forces\n3. Castle early!\n\nFollow these and you'll win more games than you lose!",
             emotion: 'happy',
+          ),
+        ],
+      );
+
+  static Lesson get _famousFormations => const Lesson(
+        id: 'ch11_l4',
+        title: 'Famous Formations',
+        description: 'Openings the masters use!',
+        xpReward: 30,
+        steps: [
+          MascotSpeechStep(
+            message: "Let me show you some famous battle formations that follow our three rules!",
+            emotion: 'storytelling',
+          ),
+          ShowPositionStep(
+            fen: 'r1bqkb1r/pppp1ppp/2n2n2/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 0 1',
+            message: "The ITALIAN GAME: e4, Nf3, Bc4 — aims at the weak f7 square! Classic attack!",
+            arrows: [('c4', 'f7')],
+          ),
+          ShowPositionStep(
+            fen: 'rnbqkbnr/ppp1pppp/8/3p4/3PP3/8/PPP2PPP/RNBQKBNR b KQkq - 0 1',
+            message: "The QUEEN'S GAMBIT: d4, c4 — offer a pawn for center control! Very strategic!",
+            highlightSquares: ['c4', 'd4'],
+          ),
+          MascotSpeechStep(
+            message: "Don't memorize moves — understand the IDEAS! Center, develop, castle. Any formation that does those three things is strong!",
+            emotion: 'explaining',
           ),
         ],
       );

@@ -1,167 +1,146 @@
 import '../../domain/entities/lesson.dart';
 
-/// Chapter 1: The Chessboard - teaches the board, ranks, files, coordinates.
+/// Chapter 1: "Into the Board" — The child arrives in the enchanted board world.
+/// NO coordinates, NO theory. Pure discovery and wonder.
 class Chapter1Content {
   static const _emptyBoard = '8/8/8/8/8/8/8/8 w - - 0 1';
-  static const _startPos =
-      'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 
   static List<Lesson> get lessons => [
-        _theBattlefield,
-        _ranksAndFiles,
-        _lightAndDark,
+        _magicBoard,
+        _lostPawns,
+        _bravePawnJourney,
       ];
 
-  static Lesson get _theBattlefield => const Lesson(
+  /// Lesson 1: Arrive in the world. Tap squares. Meet Sir Hops.
+  static Lesson get _magicBoard => const Lesson(
         id: 'ch1_l1',
-        title: 'The Battlefield',
-        description: 'Discover the 64 squares',
+        title: 'The Magic Board',
+        description: 'Where am I?',
         xpReward: 15,
         steps: [
           MascotSpeechStep(
-            message:
-                "Welcome to ChessQuest! I'm Sir Hops, your guide to the world of chess!",
-            emotion: 'excited',
-          ),
-          MascotSpeechStep(
-            message:
-                'This is the chessboard - a big square made of 64 smaller squares!',
-            emotion: 'explaining',
+            message: "Whoa! Where am I? Everything is... checkered!",
+            emotion: 'surprised',
             fen: _emptyBoard,
           ),
-          ShowPositionStep(
-            fen: _emptyBoard,
-            message: 'The board has 8 rows and 8 columns. Tap any square!',
-          ),
           MascotSpeechStep(
             message:
-                'Chess battles happen right here on this board. Every piece has its own way of moving across these squares!',
+                "Hey there! I'm Sir Hops! You've stumbled into the Enchanted Board! This whole world is made of squares. Come on, explore! Tap anywhere!",
             emotion: 'excited',
+            fen: _emptyBoard,
           ),
-          ShowPositionStep(
-            fen: _startPos,
-            message:
-                'Here is what it looks like when all the pieces are ready for battle!',
+          FreePlayStep(
+            fen: _emptyBoard,
+            message: "Tap around the board! Each square is a little land in this world!",
           ),
           MascotSpeechStep(
             message:
-                "Amazing! You've discovered the chessboard! Let's learn more about it next!",
-            emotion: 'happy',
+                "See those two colors? Light and dark, like a magical checkerboard! I live on the light squares. The dark ones are a bit spooky for me!",
+            emotion: 'storytelling',
+            fen: _emptyBoard,
+          ),
+          MascotSpeechStep(
+            message:
+                "The Shadow has frozen this kingdom. All my friends — the chess pieces — are trapped! Only someone from the Outside can help. That's YOU!",
+            emotion: 'determined',
+          ),
+          MascotSpeechStep(
+            message:
+                "Will you help me save the Enchanted Board? Let's start by rescuing some friends!",
+            emotion: 'excited',
           ),
         ],
       );
 
-  static Lesson get _ranksAndFiles => const Lesson(
+  /// Lesson 2: Rescue pawns. Learn pawn movement through doing.
+  static Lesson get _lostPawns => const Lesson(
         id: 'ch1_l2',
-        title: 'Ranks and Files',
-        description: 'Learn the rows and columns',
-        xpReward: 20,
+        title: 'The Lost Pawns',
+        description: 'Rescue the trapped pawns!',
+        xpReward: 25,
         steps: [
           MascotSpeechStep(
             message:
-                'Every square has an address, like a house! Let me show you how it works.',
-            emotion: 'explaining',
-            fen: _emptyBoard,
+                "Oh no! The little pawns are trapped! They're the smallest pieces but SO brave. They can only move forward — help this one escape!",
+            emotion: 'worried',
+            fen: '8/8/8/8/8/8/4P3/8 w - - 0 1',
           ),
           ShowPositionStep(
-            fen: _emptyBoard,
-            message:
-                'Columns go from left to right and are called FILES. They are labeled a through h.',
-            highlightSquares: ['a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8'],
-            arrows: [],
+            fen: '8/8/8/8/8/8/4P3/8 w - - 0 1',
+            message: "Move the pawn forward! It can go one or two squares on its first step!",
+            highlightSquares: ['e3', 'e4'],
+            arrows: [('e2', 'e3'), ('e2', 'e4')],
           ),
-          ShowPositionStep(
-            fen: _emptyBoard,
-            message:
-                'Rows go from bottom to top and are called RANKS. They are numbered 1 through 8.',
-            highlightSquares: ['a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1'],
+          WaitForMoveStep(
+            fen: '8/8/8/8/8/8/4P3/8 w - - 0 1',
+            acceptedMoves: [('e2', 'e3'), ('e2', 'e4')],
+            hintMessage: "Push the pawn forward! Tap it and drag up!",
+            successMessage: "You freed one! Pawns march forward, one step at a time!",
+            failMessage: "Oops! Pawns can only go straight forward — try again!",
           ),
           MascotSpeechStep(
             message:
-                'To name a square, combine the file letter and rank number. For example, the bottom-left square is a1!',
+                "Nice! But wait — there's an enemy blocking the next pawn! Pawns capture DIAGONALLY. Sneaky, right?",
             emotion: 'explaining',
-            fen: _emptyBoard,
           ),
-          WaitForTapStep(
-            fen: _emptyBoard,
-            targetSquare: 'e4',
-            message: 'Now you try! Tap the square e4!',
-            hintMessage: "e4 is in the 'e' column, row 4. It's near the center!",
-            successMessage: "That's e4! Right in the center of the board!",
+          ShowPositionStep(
+            fen: '8/8/8/3p4/4P3/8/8/8 w - - 0 1',
+            message: "The pawn captures sideways-forward! Take out the enemy!",
+            arrows: [('e4', 'd5')],
+            objectiveSquares: ['d5'],
           ),
-          WaitForTapStep(
-            fen: _emptyBoard,
-            targetSquare: 'd5',
-            message: 'Great! Now tap d5!',
-            hintMessage: "d5 is in the 'd' column, row 5.",
-            successMessage: 'Perfect! You found d5!',
-          ),
-          WaitForTapStep(
-            fen: _emptyBoard,
-            targetSquare: 'a1',
-            message: 'Tap the corner square a1!',
-            hintMessage: 'a1 is the very bottom-left corner!',
-            successMessage: 'Excellent! a1 is in the corner!',
-          ),
-          WaitForTapStep(
-            fen: _emptyBoard,
-            targetSquare: 'h8',
-            message: 'Now find h8 - the opposite corner!',
-            hintMessage: 'h8 is the very top-right corner!',
-            successMessage: "You're a natural! h8 is way up there!",
+          WaitForMoveStep(
+            fen: '8/8/8/3p4/4P3/8/8/8 w - - 0 1',
+            acceptedMoves: [('e4', 'd5')],
+            hintMessage: "Capture diagonally! Move the pawn to the enemy's square!",
+            successMessage: "GOT 'EM! Pawns move forward but bite diagonally!",
+            failMessage: "Pawns can't capture straight ahead — try going diagonal!",
           ),
           MascotSpeechStep(
             message:
-                "Awesome! You can now read the chess map! Every great chess player knows their coordinates!",
-            emotion: 'happy',
+                "You're a natural! The pawn marches forward but captures diagonally. Remember that — it'll save you later!",
+            emotion: 'proud',
           ),
         ],
       );
 
-  static Lesson get _lightAndDark => const Lesson(
+  /// Lesson 3: Navigate a pawn across the board. Discover promotion.
+  static Lesson get _bravePawnJourney => const Lesson(
         id: 'ch1_l3',
-        title: 'Light and Dark',
-        description: 'The two colors of the board',
-        xpReward: 15,
+        title: "The Brave Pawn's Journey",
+        description: 'Help a pawn reach the other side!',
+        xpReward: 30,
         steps: [
           MascotSpeechStep(
             message:
-                "Notice how the board has two colors? Light squares and dark squares take turns!",
-            emotion: 'explaining',
-            fen: _emptyBoard,
-          ),
-          ShowPositionStep(
-            fen: _emptyBoard,
-            message:
-                'Light and dark squares alternate like a checkerboard pattern. a1 is always a dark square!',
-            highlightSquares: ['a1', 'c1', 'e1', 'g1', 'b2', 'd2', 'f2', 'h2'],
-          ),
-          QuizStep(
-            question: 'What color is the square e4?',
-            options: ['Light', 'Dark'],
-            correctIndex: 0,
-            explanation:
-                'e4 is a light square! The center squares e4 and d5 are light, while d4 and e5 are dark.',
-            fen: _emptyBoard,
-          ),
-          QuizStep(
-            question: 'What color is the square d4?',
-            options: ['Light', 'Dark'],
-            correctIndex: 1,
-            explanation: 'd4 is a dark square!',
-            fen: _emptyBoard,
-          ),
-          QuizStep(
-            question: 'The bottom-right corner (h1) is always...',
-            options: ['Light', 'Dark'],
-            correctIndex: 0,
-            explanation:
-                'h1 is always a light square! Remember: "light on right" when setting up the board!',
+                "This brave little pawn wants to cross the ENTIRE board! If it reaches the other side, something magical happens...",
+            emotion: 'storytelling',
           ),
           MascotSpeechStep(
             message:
-                "Great job! You now know all about the chessboard! You're ready to meet the pieces!",
+                "Guide it through! Watch out for enemies — capture them or dodge around!",
+            emotion: 'determined',
+          ),
+          CaptureChallenge(
+            fen: '8/8/8/3p4/8/8/4P3/8 w - - 0 1',
+            targetMoves: 5,
+            piece: 'P',
+            message: "Get the pawn to the top! Capture the enemy if it's in your diagonal!",
+          ),
+          MascotSpeechStep(
+            message:
+                "WHOA! Did you see that? When a pawn reaches the other side, it TRANSFORMS! It can become a Queen, a Rook, a Bishop, or even a Knight!",
+            emotion: 'surprised',
+          ),
+          MascotSpeechStep(
+            message:
+                "Usually you pick the Queen — she's the most powerful piece in the game! We'll meet her soon!",
             emotion: 'excited',
+          ),
+          MascotSpeechStep(
+            message:
+                "Two pawns rescued! But there are bigger pieces out there who need our help. Let's go find the Rooks!",
+            emotion: 'determined',
           ),
         ],
       );

@@ -15,11 +15,17 @@ class MascotBubble extends StatelessWidget {
 
   String get _mascotEmoji {
     return switch (emotion) {
-      'excited' => '🐴',
+      'excited' => '🤩',
       'thinking' => '🤔',
       'explaining' => '🐴',
       'encouraging' => '💪',
       'happy' => '😄',
+      'surprised' => '😲',
+      'proud' => '🥳',
+      'worried' => '😰',
+      'laughing' => '😂',
+      'determined' => '😤',
+      'storytelling' => '📖',
       _ => '🐴',
     };
   }
@@ -45,16 +51,29 @@ class MascotBubble extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 44,
-            height: 44,
-            decoration: BoxDecoration(
-              color: AppColors.primaryLight.withAlpha(50),
-              shape: BoxShape.circle,
-            ),
-            child: Center(
-              child: Text(_mascotEmoji, style: const TextStyle(fontSize: 24)),
-            ),
+          Column(
+            children: [
+              Container(
+                width: 44,
+                height: 44,
+                decoration: BoxDecoration(
+                  color: AppColors.primaryLight.withAlpha(50),
+                  shape: BoxShape.circle,
+                ),
+                child: Center(
+                  child:
+                      Text(_mascotEmoji, style: const TextStyle(fontSize: 24)),
+                ),
+              ),
+              const SizedBox(height: 2),
+              Text(
+                'Sir Hops',
+                style: AppTypography.caption.copyWith(
+                  fontSize: 10,
+                  color: AppColors.primary,
+                ),
+              ),
+            ],
           ),
           const SizedBox(width: 12),
           Expanded(

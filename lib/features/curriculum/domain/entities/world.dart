@@ -3,11 +3,11 @@ import '../../../../core/constants/app_colors.dart';
 import 'chapter.dart';
 
 enum WorldId {
-  theKingdom,
-  rulesOfBattle,
-  theStrategist,
-  grandmastersPath,
-  mastersDomain,
+  theAwakening,
+  theGathering,
+  theTrainingGrounds,
+  theCampaign,
+  theFinalBattle,
 }
 
 class World {
@@ -31,47 +31,52 @@ class World {
 
   static List<World> get all => [
         World(
-          id: WorldId.theKingdom,
-          name: 'The Kingdom',
-          subtitle: 'Learn the pieces',
+          id: WorldId.theAwakening,
+          name: 'The Awakening',
+          subtitle: 'Discover the enchanted board',
           color: AppColors.world1,
-          description: 'Meet the chess pieces and learn how they move!',
+          description:
+              'You stumble into a magical chessboard world. Meet Sir Hops and discover the living chess pieces!',
           requiredXpToUnlock: 0,
           chapters: Chapter.world1Chapters,
         ),
         World(
-          id: WorldId.rulesOfBattle,
-          name: 'Rules of Battle',
-          subtitle: 'Master the rules',
+          id: WorldId.theGathering,
+          name: 'The Gathering',
+          subtitle: 'Unite the army',
           color: AppColors.world2,
-          description: 'Learn check, checkmate, and special moves!',
+          description:
+              'The Shadow threatens the kingdom! Master the rules of battle and rally your forces!',
           requiredXpToUnlock: 300,
           chapters: Chapter.world2Chapters,
         ),
         World(
-          id: WorldId.theStrategist,
-          name: 'The Strategist',
-          subtitle: 'Think like a tactician',
+          id: WorldId.theTrainingGrounds,
+          name: 'The Training Grounds',
+          subtitle: 'Sharpen your tactics',
           color: AppColors.world3,
-          description: 'Discover powerful tactics and opening secrets!',
+          description:
+              'Train with Sir Hops to master deadly tactics — forks, pins, and secret attacks!',
           requiredXpToUnlock: 1500,
           chapters: Chapter.world3Chapters,
         ),
         World(
-          id: WorldId.grandmastersPath,
-          name: "Grandmaster's Path",
-          subtitle: 'Advanced strategy',
+          id: WorldId.theCampaign,
+          name: 'The Campaign',
+          subtitle: 'March to war',
           color: AppColors.world4,
-          description: 'Master pawn structures, endgames, and deep strategy!',
+          description:
+              'Lead your army through dangerous territory toward the Shadow King!',
           requiredXpToUnlock: 4000,
           chapters: Chapter.world4Chapters,
         ),
         World(
-          id: WorldId.mastersDomain,
-          name: "Master's Domain",
-          subtitle: 'Expert mastery',
+          id: WorldId.theFinalBattle,
+          name: 'The Final Battle',
+          subtitle: 'Face the Shadow King',
           color: AppColors.world5,
-          description: 'Calculate like a grandmaster!',
+          description:
+              'Everything has led to this. Calculate, strategize, and defeat the Shadow King!',
           requiredXpToUnlock: 8000,
           chapters: Chapter.world5Chapters,
         ),

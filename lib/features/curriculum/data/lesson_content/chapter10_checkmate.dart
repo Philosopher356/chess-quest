@@ -1,126 +1,100 @@
 import '../../domain/entities/lesson.dart';
 
-/// Chapter 10: Checkmate - no escape from check.
+/// Chapter 10: "The Checkmate Scrolls" — Famous checkmate patterns.
 class Chapter10Content {
   static List<Lesson> get lessons => [
-        _gameOver,
-        _mateInOne,
-        _isItCheckmate,
+        _backRankAmbush,
+        _scholarsTrick,
+        _smotheredStrike,
       ];
 
-  static Lesson get _gameOver => const Lesson(
+  static Lesson get _backRankAmbush => const Lesson(
         id: 'ch10_l1',
-        title: 'Game Over!',
-        description: 'When there is no escape',
-        xpReward: 25,
-        steps: [
-          MascotSpeechStep(
-            message:
-                "Checkmate is when the king is in check AND there's no way to escape! The game is over!",
-            emotion: 'explaining',
-          ),
-          ShowPositionStep(
-            fen: '4k3/4R3/8/8/8/8/8/4K2R w - - 0 1',
-            message:
-                "Look: the rook on e7 gives check. The king can't move (h-rook controls rank 8), can't block, can't capture. CHECKMATE!",
-            dangerSquares: ['d8', 'f8', 'd7', 'f7'],
-            arrows: [('e7', 'e8'), ('h1', 'h8')],
-          ),
-          MascotSpeechStep(
-            message:
-                "Check = king is attacked. Checkmate = king is attacked AND no escape exists. Big difference!",
-            emotion: 'explaining',
-          ),
-          ShowPositionStep(
-            fen: '6k1/5ppp/8/8/8/8/8/4R1K1 w - - 0 1',
-            message:
-                "This is the famous 'back rank mate' pattern. The king is trapped by its own pawns!",
-            arrows: [('e1', 'e8')],
-            dangerSquares: ['g8'],
-          ),
-          MascotSpeechStep(
-            message:
-                "The goal of chess is to checkmate the enemy king. That's how you win!",
-            emotion: 'happy',
-          ),
-        ],
-      );
-
-  static Lesson get _mateInOne => const Lesson(
-        id: 'ch10_l2',
-        title: 'Checkmate in 1',
-        description: 'Find the winning move!',
-        xpReward: 35,
-        steps: [
-          MascotSpeechStep(
-            message: "Find the ONE move that delivers checkmate! Think carefully!",
-            emotion: 'excited',
-          ),
-          // Back rank mate
-          WaitForMoveStep(
-            fen: '6k1/5ppp/8/8/8/8/8/R3K3 w - - 0 1',
-            acceptedMoves: [('a1', 'a8')],
-            hintMessage: 'The king is trapped on the back rank by its own pawns...',
-            successMessage: "CHECKMATE! Back rank mate! The rook delivers the final blow!",
-            failMessage: "Look at the enemy king - it's trapped by its own pawns. How can you exploit that?",
-          ),
-          // Queen mate
-          WaitForMoveStep(
-            fen: 'k7/8/1K6/8/8/8/8/1Q6 w - - 0 1',
-            acceptedMoves: [('b1', 'a2'), ('b1', 'b7')],
-            hintMessage: "The queen can deliver mate if it gets close to the king!",
-            successMessage: "CHECKMATE! The queen and king work together!",
-            failMessage: "Get the queen next to the enemy king while your king supports!",
-          ),
-          // Simple rook mate
-          WaitForMoveStep(
-            fen: 'k7/2R5/1K6/8/8/8/8/8 w - - 0 1',
-            acceptedMoves: [('c7', 'a7')],
-            hintMessage: "The rook can slide along rank 7 to deliver mate!",
-            successMessage: "CHECKMATE! The rook on the 7th rank is deadly!",
-          ),
-          MascotSpeechStep(
-            message: "Amazing! You found all the checkmates! You're a natural!",
-            emotion: 'happy',
-          ),
-        ],
-      );
-
-  static Lesson get _isItCheckmate => const Lesson(
-        id: 'ch10_l3',
-        title: 'Is it Checkmate?',
-        description: 'Check, checkmate, or neither?',
+        title: 'The Back Rank Ambush',
+        description: 'Trapped by their own army!',
         xpReward: 30,
         steps: [
           MascotSpeechStep(
-            message:
-                "Let's test your knowledge! Is each position check, checkmate, or neither?",
-            emotion: 'excited',
+            message: "I found ancient scrolls with CHECKMATE PATTERNS! These are battle moves that end the game instantly! First: the Back Rank Ambush!",
+            emotion: 'storytelling',
           ),
-          QuizStep(
-            question: 'Black king on g8, white rook on e8, white king on e1. Is this...',
-            options: ['Check', 'Checkmate', 'Neither'],
-            correctIndex: 0,
-            explanation: "It's check! The rook attacks the king, but the king can escape to f7, g7, or h7.",
-            fen: '4R1k1/8/8/8/8/8/8/4K3 w - - 0 1',
+          ShowPositionStep(
+            fen: '6k1/5ppp/8/8/8/8/5PPP/R5K1 w - - 0 1',
+            message: "The enemy King is trapped behind its OWN pawns! A rook on the back row means instant checkmate!",
+            arrows: [('a1', 'a8')],
+            dangerSquares: ['g8'],
           ),
-          QuizStep(
-            question: 'Black king on h8, white queen on g6, white king on g1. Is this...',
-            options: ['Check', 'Checkmate', 'Neither'],
-            correctIndex: 2,
-            explanation: "Neither! The queen doesn't attack h8 from g6. The king is safe... for now!",
-            fen: '7k/8/6Q1/8/8/8/8/6K1 w - - 0 1',
-          ),
-          QuizStep(
-            question: 'Black king on g8 with pawns on f7, g7, h7. White rook on a8. Is this...',
-            options: ['Check', 'Checkmate', 'Neither'],
-            correctIndex: 1,
-            explanation: "CHECKMATE! The rook attacks on the back rank and the king's own pawns trap it!",
-            fen: 'R5k1/5ppp/8/8/8/8/8/6K1 w - - 0 1',
+          WaitForMoveStep(
+            fen: '6k1/5ppp/8/8/8/8/5PPP/R5K1 w - - 0 1',
+            acceptedMoves: [('a1', 'a8')],
+            hintMessage: "Slide the Rook to the back row! The king is trapped!",
+            successMessage: "CHECKMATE! The King's own pawns trapped it! The Back Rank Ambush!",
           ),
           MascotSpeechStep(
-            message: "You can tell the difference between check, checkmate, and safety! Well done!",
-            emotion: 'happy',
+            message: "Tip: make sure YOUR king has an escape square too! Push one pawn (like h3) to make a 'window' for your king!",
+            emotion: 'explaining',
+          ),
+        ],
+      );
+
+  static Lesson get _scholarsTrick => const Lesson(
+        id: 'ch10_l2',
+        title: "The Scholar's Trick",
+        description: 'A 4-move surprise!',
+        xpReward: 30,
+        steps: [
+          MascotSpeechStep(
+            message: "This scroll shows a 4-MOVE CHECKMATE! It's called Scholar's Mate — and it catches beginners all the time!",
+            emotion: 'excited',
+          ),
+          ShowPositionStep(
+            fen: 'r1bqkbnr/pppp1ppp/2n5/4p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR w KQkq - 0 1',
+            message: "The Queen and Bishop BOTH aim at f7 — the weakest square! Qxf7 is checkmate!",
+            arrows: [('h5', 'f7'), ('c4', 'f7')],
+            dangerSquares: ['f7'],
+          ),
+          MascotSpeechStep(
+            message: "BUT — if you know the defense, you can CRUSH this attack! Play Nf6 and the Queen has to retreat!",
+            emotion: 'determined',
+            fen: 'r1bqkb1r/pppp1ppp/2n2n2/4p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR w KQkq - 0 1',
+          ),
+          QuizStep(
+            question: "How do you defend against Scholar's Mate?",
+            options: [
+              "Move the King early",
+              "Develop Nf6 — attacks the Queen AND develops!",
+              "Push pawns on the kingside",
+            ],
+            correctIndex: 1,
+            explanation: "Nf6! The knight defends f7, develops a piece, AND attacks the Queen. The attacker wasted time!",
+          ),
+        ],
+      );
+
+  static Lesson get _smotheredStrike => const Lesson(
+        id: 'ch10_l3',
+        title: "Sir Hops' Smothered Mate",
+        description: "The ultimate knight move!",
+        xpReward: 35,
+        steps: [
+          MascotSpeechStep(
+            message: "This is MY scroll! The SMOTHERED MATE — the most beautiful checkmate in chess! Only a Knight can do it!",
+            emotion: 'proud',
+          ),
+          ShowPositionStep(
+            fen: '6rk/6pp/8/6N1/8/8/8/6K1 w - - 0 1',
+            message: "The enemy King on h8 is boxed in by its own rook and pawns. The Knight delivers the final blow!",
+            dangerSquares: ['h8'],
+          ),
+          WaitForMoveStep(
+            fen: '6rk/6pp/8/6N1/8/8/8/6K1 w - - 0 1',
+            acceptedMoves: [('g5', 'f7')],
+            hintMessage: "The Knight checkmates from a square that attacks h8!",
+            successMessage: "SMOTHERED MATE! The King is trapped by its own pieces! Sir Hops' ultimate move!",
+          ),
+          MascotSpeechStep(
+            message: "That's why I'm the best! Nobody else can deliver a smothered mate — only the Knight can jump in for the kill!",
+            emotion: 'laughing',
           ),
         ],
       );

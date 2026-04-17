@@ -1,138 +1,112 @@
 import '../../domain/entities/lesson.dart';
 
-/// Chapter 8: Board Setup - placing pieces in starting position.
+/// Chapter 8: "The Secret Passages" — Castling, en passant, promotion.
 class Chapter8Content {
-  static const _startPos =
-      'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
-
   static List<Lesson> get lessons => [
-        _whereDoesEveryoneGo,
-        _speedSetup,
+        _castleSwap,
+        _sneakyCapture,
+        _transformation,
       ];
 
-  static Lesson get _whereDoesEveryoneGo => const Lesson(
+  static Lesson get _castleSwap => const Lesson(
         id: 'ch8_l1',
-        title: 'Where Does Everyone Go?',
-        description: 'Drag pieces to their starting squares',
-        xpReward: 25,
+        title: 'The Castle Swap',
+        description: 'King and rook team up!',
+        xpReward: 30,
         steps: [
           MascotSpeechStep(
-            message:
-                "Before every chess game, you need to set up the board! Let me teach you where each piece goes.",
-            emotion: 'explaining',
+            message: "I found a SECRET PASSAGE! It's called CASTLING — the King and Rook swap places in one move!",
+            emotion: 'surprised',
           ),
           ShowPositionStep(
-            fen: _startPos,
-            message:
-                "Here's the starting position. White pieces go on rows 1 and 2, black on rows 7 and 8.",
+            fen: 'r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w KQkq - 0 1',
+            message: "The King jumps two squares toward the Rook, and the Rook leaps over! Both move at once!",
+            arrows: [('e1', 'g1'), ('h1', 'f1')],
+            highlightSquares: ['g1', 'f1'],
           ),
           MascotSpeechStep(
-            message:
-                "Pawns fill the second row (rank 2 for white, rank 7 for black). That's 8 little soldiers each!",
+            message: "Castling does TWO things at once — hides the King behind pawns AND activates the Rook! Best deal in chess!",
             emotion: 'explaining',
-            fen: '8/pppppppp/8/8/8/8/PPPPPPPP/8 w - - 0 1',
           ),
           MascotSpeechStep(
-            message:
-                "Rooks go in the corners! a1, h1 for white. a8, h8 for black.",
+            message: "But the passage has RULES:\n- King and Rook haven't moved yet\n- No pieces between them\n- King isn't in check\n- King doesn't pass through danger!",
             emotion: 'explaining',
-            fen: 'r6r/8/8/8/8/8/8/R6R w - - 0 1',
-          ),
-          MascotSpeechStep(
-            message:
-                "Knights go next to the rooks. b1, g1 for white.",
-            emotion: 'explaining',
-            fen: '1n4n1/8/8/8/8/8/8/1N4N1 w - - 0 1',
-          ),
-          MascotSpeechStep(
-            message:
-                "Bishops go next to the knights. c1, f1 for white.",
-            emotion: 'explaining',
-            fen: '2b2b2/8/8/8/8/8/8/2B2B2 w - - 0 1',
-          ),
-          MascotSpeechStep(
-            message:
-                "Now the tricky part! The QUEEN goes on her own color. White queen on d1 (light square), black queen on d8 (dark square).",
-            emotion: 'excited',
-            fen: '3q4/8/8/8/8/8/8/3Q4 w - - 0 1',
-          ),
-          MascotSpeechStep(
-            message:
-                "And the KING goes on the remaining square. White king on e1, black king on e8.",
-            emotion: 'explaining',
-            fen: '3qk3/8/8/8/8/8/8/3QK3 w - - 0 1',
           ),
           QuizStep(
-            question: 'Where does the white queen start?',
-            options: ['d1', 'e1', 'd2', 'e2'],
-            correctIndex: 0,
-            explanation:
-                "d1! Remember: the queen goes on her own color. White queen on the light square d1!",
-          ),
-          QuizStep(
-            question: 'Which piece goes in the corner?',
-            options: ['Bishop', 'Knight', 'Rook', 'Queen'],
-            correctIndex: 2,
-            explanation: "Rooks go in the corners! a1, h1, a8, and h8.",
-          ),
-          ShowPositionStep(
-            fen: _startPos,
-            message:
-                "Here's the complete setup! Remember: rooks in corners, then knights, bishops, queen on her color, king next to her.",
-          ),
-          MascotSpeechStep(
-            message:
-                "Tip: remember 'Queen on her own color' and you'll never mix up king and queen!",
-            emotion: 'happy',
+            question: "Why is castling so important?",
+            options: [
+              "It looks cool",
+              "It protects the King AND activates the Rook",
+              "It gives you extra points",
+            ],
+            correctIndex: 1,
+            explanation: "Two benefits in one move! The King hides behind pawns, and the Rook joins the fight!",
           ),
         ],
       );
 
-  static Lesson get _speedSetup => const Lesson(
+  static Lesson get _sneakyCapture => const Lesson(
         id: 'ch8_l2',
-        title: 'Speed Setup',
-        description: 'How fast can you set up the board?',
-        xpReward: 30,
-        isMiniGame: true,
+        title: 'The Sneaky Capture',
+        description: 'En passant — the ghost move!',
+        xpReward: 25,
         steps: [
           MascotSpeechStep(
-            message:
-                "Quick quiz! Can you remember where all the pieces go?",
-            emotion: 'excited',
+            message: "There's a sneaky trick called EN PASSANT. It's French for 'in passing' — like catching a spy!",
+            emotion: 'storytelling',
           ),
-          QuizStep(
-            question: 'Which piece stands between the rook and the bishop?',
-            options: ['Queen', 'King', 'Knight', 'Pawn'],
-            correctIndex: 2,
-            explanation: 'The knight! The order from the corner is: Rook, Knight, Bishop.',
+          ShowPositionStep(
+            fen: '8/8/8/4Pp2/8/8/8/8 w - f6 0 1',
+            message: "That black pawn just jumped two squares to land beside your pawn. You can capture it as if it only moved one!",
+            arrows: [('e5', 'f6')],
+            objectiveSquares: ['f6'],
           ),
-          QuizStep(
-            question: 'On which rank do white pawns start?',
-            options: ['Rank 1', 'Rank 2', 'Rank 3', 'Rank 7'],
-            correctIndex: 1,
-            explanation: "Rank 2! White's pawns form a line on the second row.",
-          ),
-          QuizStep(
-            question: 'Where does the black king start?',
-            options: ['d8', 'e8', 'd1', 'e1'],
-            correctIndex: 1,
-            explanation: 'e8! The black king starts on e8.',
-          ),
-          QuizStep(
-            question: '"Queen on her own color" means...',
-            options: [
-              'White queen on dark, black queen on light',
-              'White queen on light, black queen on dark',
-              'Both queens on light squares',
-              'Both queens on dark squares',
-            ],
-            correctIndex: 1,
-            explanation:
-                'White queen on the light square (d1), black queen on the dark square (d8)!',
+          WaitForMoveStep(
+            fen: '8/8/8/4Pp2/8/8/8/8 w - f6 0 1',
+            acceptedMoves: [('e5', 'f6')],
+            hintMessage: "Capture the pawn en passant — move diagonally to f6!",
+            successMessage: "GOTCHA! You caught the spy mid-jump! En passant!",
           ),
           MascotSpeechStep(
-            message: "You know the setup perfectly! Time for real chess!",
-            emotion: 'happy',
+            message: "Important: you can ONLY do en passant on the VERY NEXT move! Wait too long and the chance vanishes!",
+            emotion: 'worried',
+          ),
+        ],
+      );
+
+  static Lesson get _transformation => const Lesson(
+        id: 'ch8_l3',
+        title: 'The Transformation',
+        description: 'Pawns become queens!',
+        xpReward: 25,
+        steps: [
+          MascotSpeechStep(
+            message: "Remember how a pawn transforms when it reaches the other side? Let's master that power!",
+            emotion: 'excited',
+          ),
+          ShowPositionStep(
+            fen: '8/4P3/8/8/8/8/8/4K3 w - - 0 1',
+            message: "This pawn is ONE step from the end! Push it forward and watch the magic!",
+            arrows: [('e7', 'e8')],
+            objectiveSquares: ['e8'],
+          ),
+          MascotSpeechStep(
+            message: "You can become a Queen, Rook, Bishop, or Knight. Almost ALWAYS pick the Queen — she's the strongest!",
+            emotion: 'explaining',
+          ),
+          QuizStep(
+            question: "When should you NOT promote to a Queen?",
+            options: [
+              "Never — always pick Queen",
+              "When a Knight gives checkmate but a Queen doesn't",
+              "When you already have a Queen",
+            ],
+            correctIndex: 1,
+            explanation: "Sometimes a Knight promotion gives an instant checkmate! It's called underpromotion — rare but brilliant!",
+          ),
+          MascotSpeechStep(
+            message: "Every pawn is a potential Queen! That's why pawns are more valuable than they look!",
+            emotion: 'proud',
           ),
         ],
       );

@@ -1,115 +1,107 @@
 import '../../domain/entities/lesson.dart';
 
-/// Chapter 4: The Bishop - diagonal movement.
+/// Chapter 4: "Her Majesty" — Rescue the Queen from the Shadow's dungeon.
 class Chapter4Content {
   static List<Lesson> get lessons => [
-        _diagonalRunner,
-        _bishopCaptureMission,
-        _twoBishops,
+        _capturedQueen,
+        _queensWrath,
+        _royalRampage,
       ];
 
-  static Lesson get _diagonalRunner => const Lesson(
+  static Lesson get _capturedQueen => const Lesson(
         id: 'ch4_l1',
-        title: 'The Diagonal Runner',
-        description: 'Bishops slide diagonally',
-        xpReward: 20,
-        steps: [
-          MascotSpeechStep(
-            message:
-                "Meet the Bishop! It wears a pointy hat and loves diagonals!",
-            emotion: 'excited',
-          ),
-          ShowPositionStep(
-            fen: '8/8/8/8/4B3/8/8/8 w - - 0 1',
-            message:
-                'The bishop moves diagonally - as many squares as it wants!',
-            arrows: [
-              ('e4', 'h7'),
-              ('e4', 'b7'),
-              ('e4', 'h1'),
-              ('e4', 'a8'),
-            ],
-          ),
-          MascotSpeechStep(
-            message:
-                "Here's something cool: a bishop ALWAYS stays on the same color square! This one started on a light square, so it can only ever visit light squares.",
-            emotion: 'explaining',
-            fen: '8/8/8/8/4B3/8/8/8 w - - 0 1',
-          ),
-          WaitForMoveStep(
-            fen: '8/8/8/8/4B3/8/8/8 w - - 0 1',
-            acceptedMoves: [
-              ('e4', 'f5'), ('e4', 'g6'), ('e4', 'h7'),
-              ('e4', 'd5'), ('e4', 'c6'), ('e4', 'b7'), ('e4', 'a8'),
-              ('e4', 'f3'), ('e4', 'g2'), ('e4', 'h1'),
-              ('e4', 'd3'), ('e4', 'c2'), ('e4', 'b1'),
-            ],
-            hintMessage: 'Move the bishop along any diagonal!',
-            successMessage: "The bishop glides diagonally!",
-            showValidMoves: true,
-          ),
-          QuizStep(
-            question: 'Can a bishop on a light square ever reach a dark square?',
-            options: ['Yes', 'No'],
-            correctIndex: 1,
-            explanation:
-                "No! A bishop is forever trapped on its starting color. That's why you need BOTH bishops to cover the whole board!",
-          ),
-          MascotSpeechStep(
-            message:
-                "The bishop is worth 3 points - the same as a knight! They're a great pair.",
-            emotion: 'happy',
-          ),
-        ],
-      );
-
-  static Lesson get _bishopCaptureMission => const Lesson(
-        id: 'ch4_l2',
-        title: 'Bishop Capture Mission',
-        description: 'Capture targets diagonally!',
+        title: 'The Captured Queen',
+        description: 'Free the most powerful piece!',
         xpReward: 25,
         steps: [
           MascotSpeechStep(
             message:
-                "Time to practice! Capture the enemy pawns with your bishop!",
-            emotion: 'excited',
+                "The Queen is locked in the Shadow's dungeon! She's the MOST POWERFUL piece — she moves like a Rook AND a Bishop combined!",
+            emotion: 'worried',
           ),
-          CaptureChallenge(
-            fen: '8/1p3p2/8/8/3B4/8/8/8 w - - 0 1',
-            targetMoves: 2,
-            piece: 'B',
-            message: 'Capture both black pawns with the bishop!',
+          ShowPositionStep(
+            fen: '8/8/3p1p2/8/3pQp2/8/3p1p2/8 w - - 0 1',
+            message: "The Queen is surrounded by guards! She can go straight OR diagonal — help her break free!",
+            arrows: [('e4', 'e8'), ('e4', 'a4'), ('e4', 'h7'), ('e4', 'b1')],
+          ),
+          WaitForMoveStep(
+            fen: '8/8/3p1p2/8/3pQp2/8/3p1p2/8 w - - 0 1',
+            acceptedMoves: [
+              ('e4', 'd5'), ('e4', 'f5'), ('e4', 'd3'), ('e4', 'f3'),
+              ('e4', 'd4'), ('e4', 'f4'), ('e4', 'e5'), ('e4', 'e3'),
+              ('e4', 'c6'), ('e4', 'g6'), ('e4', 'c2'), ('e4', 'g2'),
+            ],
+            hintMessage: "The Queen goes ANY direction! Capture a guard!",
+            successMessage: "The Queen smashes through! She's unstoppable!",
+          ),
+          MascotSpeechStep(
+            message:
+                "The Queen is FREE! She's worth 9 pawns — more than any other piece! NEVER trade her for something small!",
+            emotion: 'proud',
           ),
         ],
       );
 
-  static Lesson get _twoBishops => const Lesson(
-        id: 'ch4_l3',
-        title: 'Two Bishops Team Up',
-        description: 'Together they cover everything!',
-        xpReward: 20,
+  static Lesson get _queensWrath => const Lesson(
+        id: 'ch4_l2',
+        title: "The Queen's Wrath",
+        description: 'She goes everywhere!',
+        xpReward: 25,
         steps: [
-          ShowPositionStep(
-            fen: '8/8/8/8/3BB3/8/8/8 w - - 0 1',
+          MascotSpeechStep(
             message:
-                "One bishop covers light squares, the other covers dark squares. Together, they rule the board!",
-            highlightSquares: ['d4', 'e4'],
+                "The Queen is FURIOUS about being captured! Watch her power — she controls the entire board from the center!",
+            emotion: 'excited',
+          ),
+          ShowPositionStep(
+            fen: '8/8/8/3Q4/8/8/8/8 w - - 0 1',
+            message: "From the center, the Queen attacks 27 squares! Straight lines AND diagonals!",
+            highlightSquares: [
+              'd1', 'd2', 'd3', 'd4', 'd6', 'd7', 'd8',
+              'a5', 'b5', 'c5', 'e5', 'f5', 'g5', 'h5',
+              'c6', 'b7', 'a8', 'e6', 'f7', 'g8',
+              'c4', 'b3', 'a2', 'e4', 'f3', 'g2', 'h1',
+            ],
           ),
           MascotSpeechStep(
             message:
-                "That's why losing a bishop is a big deal - your remaining bishop can only reach half the squares!",
-            emotion: 'thinking',
+                "She's like a Rook and Bishop fused together! But be careful — if you lose her, it's a HUGE loss!",
+            emotion: 'explaining',
           ),
           QuizStep(
-            question: 'How many points is a bishop worth?',
-            options: ['1 point', '3 points', '5 points', '9 points'],
+            question: "Why is the Queen so powerful?",
+            options: [
+              "She can jump over pieces",
+              "She moves like a Rook AND Bishop combined",
+              "She can move twice per turn",
+            ],
             correctIndex: 1,
-            explanation: 'A bishop is worth 3 points, the same as a knight!',
+            explanation: "The Queen combines the Rook's straight lines with the Bishop's diagonals. She's the ultimate piece!",
+          ),
+        ],
+      );
+
+  static Lesson get _royalRampage => const Lesson(
+        id: 'ch4_l3',
+        title: 'Royal Rampage',
+        description: 'Nothing can stop her!',
+        xpReward: 30,
+        steps: [
+          MascotSpeechStep(
+            message:
+                "Time for the Queen's revenge! Help her wipe out ALL the Shadow's guards!",
+            emotion: 'determined',
+          ),
+          CaptureChallenge(
+            fen: '3p4/8/8/p3Q2p/8/8/8/4p3 w - - 0 1',
+            targetMoves: 4,
+            piece: 'Q',
+            message: "Capture all 4 enemies with the Queen! She can go anywhere!",
           ),
           MascotSpeechStep(
             message:
-                "Great work! You now know the bishop - the diagonal master!",
-            emotion: 'happy',
+                "INCREDIBLE! The Queen has joined us! Now there's only one piece left to train... ME!",
+            emotion: 'excited',
           ),
         ],
       );
